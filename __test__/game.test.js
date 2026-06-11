@@ -32,17 +32,17 @@ describe('Game', () => {
     })
   })
 
-  describe('turn', () => {
-    it("Inserts an 'X' into the top center", async () => {
-      game.turn(0, 1)
-      expect(game.board[0][1]).toBe('X')
-    })
-
-    it("Inserts an 'X' into the top left', async () => {
-      game.turn(0)
-      expect(game.board[0][0]).toBe('X')
-    })
+describe('turn', () => {
+  it("Inserts an 'X' into the top center", async () => {
+    game.turn(0, 1)
+    expect(game.board[0][1]).toBe('X')
   })
+
+  it("Inserts an 'X' into the top left", async () => {
+    game.turn(0)
+    expect(game.board[0][0]).toBe('X')
+  })
+})
 
   describe('nextPlayer', () => {
     it('Sets the current player to be whoever it is not', async () => {
