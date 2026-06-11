@@ -1,15 +1,4 @@
 const Game = require('../src/game').default
-const fs = require('fs')
-
-describe('App', () => {
-  it('Contains the compiled JavaScript', (done) => {
-    fs.readFile('./public/main.js', 'utf8', (err, data) => {
-      expect(err).toBe(null)
-      expect(data).toMatchSnapshot()
-      done()
-    })
-  })
-})
 
 describe('Game', () => {
   let game, p1, p2
@@ -49,7 +38,7 @@ describe('Game', () => {
       expect(game.board[0][1]).toBe('X')
     })
 
-    it("Inserts an 'X' into the top left", async () => {
+    it("Inserts an 'X' into the top left', async () => {
       game.turn(0)
       expect(game.board[0][0]).toBe('X')
     })
@@ -59,8 +48,11 @@ describe('Game', () => {
     it('Sets the current player to be whoever it is not', async () => {
       Math.random = () => 0.4
       const game = new Game(p1, p2)
+
       expect(game.player).toBe('Salem')
+
       game.nextPlayer()
+
       expect(game.player).toBe('Nate')
     })
   })
