@@ -1,17 +1,19 @@
 const Game = require('../src/game').default
 const fs = require('fs')
 
-it('Contains the compiled JavaScript', (done) => {
-  fs.readFile('./public/main.js', 'utf8', (err, data) => {
-    expect(err).toBe(null)
-    expect(data).toMatchSnapshot()
-    done()
+describe('App', () => {
+  it('Contains the compiled JavaScript', (done) => {
+    fs.readFile('./public/main.js', 'utf8', (err, data) => {
+      expect(err).toBe(null)
+      expect(data).toMatchSnapshot()
+      done()
+    })
   })
-})
 })
 
 describe('Game', () => {
   let game, p1, p2
+
   beforeEach(() => {
     p1 = 'Salem'
     p2 = 'Nate'
@@ -26,8 +28,8 @@ describe('Game', () => {
 
     it('Initializes with an empty board', async () => {
       for (let r = 0; r < game.board.length; r++) {
-        for (let c = 0; c < game.board[r].lenght; c++) {
-          expect(game.board[r][c]).toBeUndefined()
+        for (let c = 0; c < game.board[r].length; c++) {
+          expect(game.board[r][c]).toBe(null)
         }
       }
     })
@@ -69,6 +71,7 @@ describe('Game', () => {
         for (let c = 0; c < game.board[r].length; c++) {
           game.board[r][c] = 'X'
         }
+
         expect(game.hasWinner()).toBe(true)
 
         for (let c = 0; c < game.board[r].length; c++) {
@@ -82,6 +85,7 @@ describe('Game', () => {
         for (let c = 0; c < game.board[r].length; c++) {
           game.board[c][r] = 'X'
         }
+
         expect(game.hasWinner()).toBe(true)
 
         for (let c = 0; c < game.board[r].length; c++) {
@@ -94,6 +98,7 @@ describe('Game', () => {
       for (let r = 0; r < game.board.length; r++) {
         game.board[r][r] = 'X'
       }
+
       expect(game.hasWinner()).toBe(true)
     })
 
@@ -101,6 +106,7 @@ describe('Game', () => {
       for (let r = 0; r < game.board.length; r++) {
         game.board[2 - r][r] = 'X'
       }
+
       expect(game.hasWinner()).toBe(true)
     })
   })
