@@ -1,0 +1,43 @@
+name: Update Jest Snapshot
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-snapshot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build --if-present
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
+
+      - name: Update Jest snapshot
+        run: npx jest -u
+
+      - name: Commit updated snapshot
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add public/main.js __test__/__snapshots__/game.test.js.snap
+
+          git diff --cached --quiet || git commit -m "Update Jest snapshot"
+          git push
