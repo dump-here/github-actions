@@ -11,15 +11,15 @@ on:
 
 jobs:
   build:
-    runs-on:
+    runs-on: ubuntu-latest
 
     steps:
     - name: checkout
-      run: actions/checkout@v2
+      uses: actions/checkout@v2
     - name: install and build
       run: |
         npm install
-        npm build
+        npm run build
 
 
   test:
