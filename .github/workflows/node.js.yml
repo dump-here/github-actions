@@ -11,6 +11,18 @@ on:
 
 jobs:
   build:
+    runs-on:
+
+    steps:
+    - name: checkout
+      run: actions/checkout@v2
+    - name: install and build
+      run: |
+        npm install
+        npm build
+
+
+  test:
 
     runs-on: ubuntu-latest
 
@@ -27,8 +39,14 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-      env:
-        NODE_OPTIONS: --openssl-legacy-provider
-    - run: npm test
+    - name: build and test
+      run: |
+        npm install
+        npm test
+      env: 
+        CI: true
+#    - run: npm ci
+#    - run: npm run build --if-present
+#      env:
+#        NODE_OPTIONS: --openssl-legacy-provider
+#    - run: npm test
