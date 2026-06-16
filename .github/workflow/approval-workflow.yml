@@ -1,3 +1,15 @@
 name: team apprval workflow
 
 on: pull_request_review
+
+jobs:
+  invokelabel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add "approved" label when approved
+        uses: realstealthninja/label-when-approved@main
+        with:
+          approvals: 1
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          label: 'approved'
+    
